@@ -18,9 +18,10 @@ int main(){
 
     fstream myFile,inFile;  //myfile filenames.txt dosyasını okuyacak olan, infile ise input olan harf dosyalarını okuyacak olan file tipi  
     string ch;              //Sırasıyla dosyaları açmak için dosyaların ismini tutan string
-    char temp;              //İnput dosyalarının içerisindeki birgülleri almak için temp değer
+    char temp;              //Input dosyalarinin icerisindeki birgülleri almak için temp değer
     int **input;            //infile tarafından okunan değerlerin tutulduğu matris
-    int i,j,k,sum,fileChoice,ruleChoice,count=0;       //i,j,k iteratör; sum ağırlık*input değerlerini tutmak için, fileChoice binary veya bipolar input seçmek için,count  başarılı öğrenme sayısı
+    int i,j,k,sum,fileChoice,ruleChoice,count=0;        //i,j,k iteratör; sum ağırlık*input değerlerini tutmak için, fileChoice binary veya bipolar input seçmek için,
+                                                        //count  başarılı öğrenme sayısı
     float alpha,**weight,*bias,rate=0;      //alpha öğrenme kaysayısı, weight ağırlık matrisi, bias bias, rate başarı oranı
     //alpha öğrenme katsayısı, weight ağırlık matrisi, bias bias, rate en son hesaplanacak olan başarı oranı
     int threshold,epoch,ep;    //threshold eşik değeri, epoch tur sayısı
