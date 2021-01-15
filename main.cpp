@@ -1,7 +1,7 @@
 //Binary veya bipolar input alan ve binary output veren
 //63*7 mimarisinde yapay sinir aglari uygulamasi
-//3 farkli fontta 7 farkli harfi input olarak alir ve supervised olarak bunlari ögrenen bir ysa
-//agirlik guncelleme kurali olarak Delta kurali ve perceptron (yorum satiri olarak) kuralı yer almaktadır 
+//3 farkli fontta 7 farkli harfi input olarak alir ve supervised olarak bunlari ogrenen bir ysa
+//agirlik guncelleme kurali olarak Delta kurali ve perceptron (yorum satiri olarak) kurali yer almaktadir 
 
 #include<iostream>
 #include<fstream>
@@ -11,7 +11,7 @@
 
 #define FILENUMBER 21       //Input dosyasi sayisi 3 font*7 harf
 #define INPUTNUMBER 63      //Bir input dosyasinin icerisindeki veri sayisi
-#define T 7                 //Input dosyasinin içerisindeki her bir verinin 7 output nöronuyla olan baglantisi
+#define T 7                 //Input dosyasinin içerisindeki her bir verinin 7 output noronuyla olan baglantisi
 using namespace std;
 
 int main(){
