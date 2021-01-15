@@ -87,7 +87,7 @@ int main(){
             }
 
             if(!inFile.is_open()){
-                cerr << "Hata - " << ch << endl;
+                cerr << "Error - " << ch << endl;
                 exit(EXIT_FAILURE);
             }else{
                 while (!inFile.eof())
