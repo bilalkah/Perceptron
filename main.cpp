@@ -1,31 +1,25 @@
-//Binary veya bipolar input alan ve binary output veren
-//63*7 mimarisinde yapay sinir aglari uygulamasi
-//3 farkli fontta 7 farkli harfi input olarak alir ve supervised olarak bunlari ogrenen bir ysa
-//agirlik guncelleme kurali olarak Delta kurali ve perceptron (yorum satiri olarak) kurali yer almaktadir 
-
 #include<iostream>
 #include<fstream>
 #include<string>
 #include<stdlib.h>
 #include<iomanip>
 
-#define FILENUMBER 21       //Input dosyasi sayisi 3 font*7 harf
-#define INPUTNUMBER 63      //Bir input dosyasinin icerisindeki veri sayisi
-#define T 7                 //Input dosyasinin içerisindeki her bir verinin 7 output noronuyla olan baglantisi
+#define FILENUMBER 21
+#define INPUTNUMBER 63 
+#define T 7 
+
 using namespace std;
 
 int main(){
 
-    fstream myFile,inFile;  //myfile filenames.txt dosyasını okuyacak olan, infile ise input olan harf dosyalarını okuyacak olan file tipi  
-    string ch;              //Sırasıyla dosyaları açmak için dosyaların ismini tutan string
-    char temp;              //Input dosyalarinin icerisindeki birgülleri almak için temp değer
-    int **input;            //infile tarafından okunan değerlerin tutulduğu matris
-    int i,j,k,sum,fileChoice,ruleChoice,count=0;        //i,j,k iteratör; sum ağırlık*input değerlerini tutmak için, fileChoice binary veya bipolar input seçmek için,
-                                                        //count  başarılı öğrenme sayısı
-    float alpha,**weight,*bias,rate=0;      //alpha öğrenme kaysayısı, weight ağırlık matrisi, bias bias, rate başarı oranı
-    //alpha öğrenme katsayısı, weight ağırlık matrisi, bias bias, rate en son hesaplanacak olan başarı oranı
-    int threshold,epoch,ep;    //threshold eşik değeri, epoch tur sayısı
-    int target[T][T]={          {1,0,0,0,0,0,0},    //target matrisi her bir harf için hedeflenen output değerlerini gösterir
+    fstream myFile,inFile;
+    string ch;
+    char temp;
+    int **input;
+    int i,j,k,sum,fileChoice,ruleChoice,count=0;
+    float alpha,**weight,*bias,rate=0;
+    int threshold,epoch,ep;
+    int target[T][T]={          {1,0,0,0,0,0,0},
                                 {0,1,0,0,0,0,0},
                                 {0,0,1,0,0,0,0},
                                 {0,0,0,1,0,0,0},
@@ -68,7 +62,7 @@ int main(){
     }
 
     
-    myFile.open("Filenames.txt",ios::in);   //Dosyaların isminin tutulduğu dosyayı açar
+    myFile.open("Filenames.txt",ios::in);
 
     if(!myFile.is_open()){
         cerr << "Hata" << endl;
@@ -76,17 +70,17 @@ int main(){
     }else{
         cout << "Filenames.txt is opened." << endl;
         cout << "Press 1 for Binary input\nPress 2 for Bipolar input" << endl;
-        cin >> fileChoice;  //Binary input mu yoksa bipolar input mu kullanılacağı seçilir 
+        cin >> fileChoice;
         i=0;
-        while (!myFile.eof() && i!=21)  //filenames.txt dosyasının sonuna gelene kadar ve 21 tane dosya açılana kadar
+        while (!myFile.eof() && i!=21)
         {   
             j=0;         
-            getline(myFile,ch);     //her bir satırda dosyaların ismi yazıyor
+            getline(myFile,ch);
 
             if(fileChoice==1){
-                inFile.open("./Binary_Karakterler_Tam/"+ch, ios::in );  //eğer fileChoice 1 ise binary karakterlerin olduğu dizine gidip dosyaları aç
+                inFile.open("./Binary_Karakterler_Tam/"+ch, ios::in ); 
             }else if(fileChoice==2){
-                inFile.open("./Karakterler_Tam/"+ch, ios::in);          //eğer fileChoice 1 ise bipolar karakterlerin olduğu dizine gidip dosyaları aç
+                inFile.open("./Karakterler_Tam/"+ch, ios::in);
             }else{
                 cerr << "Wrong choice" << endl;
                 exit(EXIT_FAILURE);
@@ -98,15 +92,15 @@ int main(){
             }else{
                 while (!inFile.eof())
                 {
-                    inFile >> input[i][j];  //dosyanın sonuna gelene kadar her bir int değerini okur ve matrise işler, i=kaçıncı dosya, j=kaçıncı int
-                    inFile >> temp;         //aradaki virgülü tutar
+                    inFile >> input[i][j]; 
+                    inFile >> temp;        
                     j++;
                 }
 
                 i++;
-                inFile.close();     //Okuma işlemi bittikten sonra dosyayı kapat
+                inFile.close(); 
             }
-            ch.erase();             //dosyanın ismini tutan stringi temizle, yanlış isim yazılmaması için
+            ch.erase();   
         }
         if(i==21){
             if(fileChoice==1){
@@ -117,14 +111,6 @@ int main(){
         }
         myFile.close();
     }
-    /****************************************************************/
-    //Epoch sayısı kadar veya %100 başarıya ulaşana kadar tekrar tekrar inputlar YSA'ya girer ve ağırlıklar tekrar hesaplanır
-    //Dosyalar sırasıyla girer ve 63 tane data ilk olarak 1. output nöronuna girer ve inputlar nöron ile arasındaki ağırlıklarla çarpılır ve toplanır. 
-    //Ardından toplama bias eklenir ve toplam thresholddan geçirilir.
-    //çıkan sonuç target değeri ile kıyaslanır ve eğer farklı değerler gelirse mimaride istenilen algoritma kullanılarak ağırlıklar güncellenir ve count sıfıra eşitlenir.
-    //Eğer sonuç target değeri ile aynı gelirse count bir arttırılır.
-    //Bu 1, 2, 3, .., 7. nöronlar olarak ilerler
-    //bir epoch tamamlanmış olur ve epoch bir azaltılarak döngünün başına dönülür
     while(epoch>0 && count<(FILENUMBER*T)){         
 
         for(i=0;i<FILENUMBER;i++){  
@@ -146,9 +132,9 @@ int main(){
                         
                     for(j=0;j<INPUTNUMBER;j++){
                         if(ruleChoice==1){
-                            weight[j][k]+=alpha*(target[i%7][k])*input[i][j];            //Perceptron öğrenmesi
+                            weight[j][k]+=alpha*(target[i%7][k])*input[i][j];
                         }else{
-                            weight[j][k]+=alpha*input[i][j]*(target[i%7][k]-sum);        //Delta öğrenmesi
+                            weight[j][k]+=alpha*input[i][j]*(target[i%7][k]-sum);
                         }   
                     }
                     bias[k]+=alpha*target[i%7][k];
@@ -161,8 +147,6 @@ int main(){
         epoch--;
     }
 
-    /****************************************************************/
-    //Ağırlıkların son halini ve kullanıcının girdiği değerleri weight_matrix.txt isimli dosyaya kaydediyorum.
     myFile.open("weight_matrix.txt",ios::out);
     myFile << "\tY1\tY2\tY3\tY4\tY5\tY6\tY7" << endl;
     for(i=0;i<INPUTNUMBER;i++){
@@ -186,8 +170,6 @@ int main(){
         myFile << "Rule: Delta" << endl;
     }
     myFile.close();
-
-    //Epoch sayısını tamamladıktan sonra veya %100 başarıya ulaştıktan sonra en güncel ağırlıkları kullanarak inputları tekrardan YSA'ya sokup çıktısını yazdırıyorum.
     for(i=0;i<FILENUMBER;i++){
         for(k=0;k<T;k++){
             sum=0;
@@ -207,12 +189,9 @@ int main(){
         }
         cout << endl;
    }
-   //çıktıları targetla kıyaslayıp başarı oranını hesaplıyorum
    rate=100*rate/(FILENUMBER*T);
    cout << "Success rate: " << setprecision(4) << rate << endl;
    
-    /****************************************************************/
-
     delete[] bias;
 
     for(i=0;i<INPUTNUMBER;i++){
